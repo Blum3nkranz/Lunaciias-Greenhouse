@@ -1,0 +1,7 @@
+{
+  "greenhouse.binding": "设置快捷键",
+  "ui.bind.hint": "按键盘键或鼠标键绑定；Esc 取消；Delete / Backspace 清除。",
+  "ui.bind.wait": "按下按键…",
+  "key.lunaciia_greenhouse.greenhouse": "打开温室编辑器",
+  "key.category.lunaciia_greenhouse.settings": "温室"
+}

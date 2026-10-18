@@ -1,0 +1,35 @@
+// Opt-in only: ./gradlew -I tools/smoke.gradle runClient -PsmokeAssets=<Minecraft assets directory>
+allprojects {
+    afterEvaluate { p ->
+        def fixture='work/smoke/run'
+        p.sourceSets.create('smoke') {
+            java.srcDir 'tools/smoke/java'
+            resources.srcDir 'tools/smoke/resources'
+            compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
+        }
+        p.loom.mods.clear()
+        p.loom.mods { greenhouse_smoke { sourceSet p.sourceSets.smoke } }
+        p.loom.runs.client {
+            runDir fixture
+            programArgs '--width','1100','--height','740'
+            if(p.hasProperty('smokeAssets')) programArgs '--assetsDir',p.property('smokeAssets').toString(),'--assetIndex','30'
+        }
+        p.tasks.register('prepareSmoke') {
+            dependsOn p.tasks.named('jar')
+            doLast {
+                p.copy { from p.tasks.named('jar').get().archiveFile; into p.file("${fixture}/mods") }
+                def options=p.file("${fixture}/options.txt");options.parentFile.mkdirs()
+                def lines=options.exists()?options.readLines('UTF-8'):[]
+                lines.removeAll { it.startsWith('soundCategory_master:') || it.startsWith('pauseOnLostFocus:') || it.startsWith('lang:') }
+                lines.addAll(['soundCategory_master:0.0','pauseOnLostFocus:false','lang:zh_cn'])
+                options.setText(lines.join('\n')+'\n','UTF-8')
+            }
+        }
+        p.tasks.named('runClient').configure {
+            dependsOn p.tasks.named('smokeClasses'),p.tasks.named('prepareSmoke')
+            classpath+=p.sourceSets.smoke.output
+            classpath=classpath.filter { f -> !(f.absolutePath.replace('\\','/').contains('/classes/java/main')||f.absolutePath.replace('\\','/').contains('/resources/main')) }
+        }
+        if(p.hasProperty('smokeAssets'))p.tasks.matching { it.name=='downloadAssets' }.configureEach { enabled=false }
+    }
+}

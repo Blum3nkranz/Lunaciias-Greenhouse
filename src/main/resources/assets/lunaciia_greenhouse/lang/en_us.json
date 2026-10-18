@@ -1,0 +1,7 @@
+{
+  "greenhouse.binding": "Set shortcut",
+  "ui.bind.hint": "Press a keyboard or mouse button. Esc cancels; Delete / Backspace clears.",
+  "ui.bind.wait": "Press a key…",
+  "key.lunaciia_greenhouse.greenhouse": "Open Greenhouse editor",
+  "key.category.lunaciia_greenhouse.settings": "Greenhouse"
+}

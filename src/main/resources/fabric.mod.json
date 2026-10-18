@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "lunaciia_greenhouse",
+  "version": "${version}",
+  "name": "Lunaciia's Greenhouse",
+  "description": "Standalone Greenhouse planting editor, local presets and world projection. AI-made; upstream credits included.",
+  "authors": [
+    "Lunaciia"
+  ],
+  "license": "GPL-3.0-only",
+  "environment": "client",
+  "contact": {
+    "homepage": "https://github.com/Blum3nkranz/Lunaciias-Greenhouse",
+    "sources": "https://github.com/Blum3nkranz/Lunaciias-Greenhouse",
+    "issues": "https://github.com/Blum3nkranz/Lunaciias-Greenhouse/issues"
+  },
+  "entrypoints": {
+    "client": [
+      "dev.lunaciia.greenhouse.GreenhouseClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "26.1.2",
+    "java": ">=25",
+    "fabric-api": ">=0.155.3",
+    "hypixel-mod-api": ">=1.0.2"
+  },
+  "accessWidener": "greenhouse.accesswidener"
+}
